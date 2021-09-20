@@ -1,14 +1,14 @@
 <template>
-  <h1> hello world</h1>
+  <Data/>
 </template>
 
 <script>
-
+import Data from "./components/Data"
 
 export default {
   name: 'App',
   components: {
-  
+    Data
   }
 }
 </script>
