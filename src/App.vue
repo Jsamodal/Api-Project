@@ -15,11 +15,14 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Raleway', sans-serif;
   text-align: center;
-  color: #2c3e50;
+  color: black;
   margin-top: 60px;
+  background-color:rgb(196, 195, 195);
+}
+
+*{
+  background-color:rgb(196, 195, 195);
 }
 </style>

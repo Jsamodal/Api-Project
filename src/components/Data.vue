@@ -1,15 +1,16 @@
 <template>
     <div class="container">
-        <ul v-for="user in users.students">
-            <ul>
-                 <img v-bind:src="user.pic" />
-                <h1>{{user.firstName}} {{user.lastName}} </h1>
+        <ul class="info" v-for="user in users.students">
+                 <img v-bind:src="user.pic" class='profilepicture'/>
+                 <div class="info-container">
+                <h1>{{user.firstName.toUpperCase()}} {{user.lastName.toUpperCase()}} </h1>
                 <p>Company: {{user.company}}</p>
                 <p>Email: {{user.email}}</p>
                 <p>Skill: {{user.skill}}</p>
                 <!-- <p v-for="grade in user.grades">{{onAverage(grade)}}</p> -->
                 <p>Average: {{onAverage(user.grades)}}%</p>
-            </ul>
+                </div>
+            
         </ul>
     </div>
 </template>
@@ -39,50 +40,53 @@ export default {
     },
     methods: {
         onAverage(arr){
-            let output = []
+            let NumArray = arr.map(element => parseInt(element))
 
-            for ( let num of arr){
-            let suum = parseInt(num)
-            output.push(suum)
-        
-            const reducer = (previousValue, currentValue) => previousValue + currentValue;
-            const sum = output.reduce(reducer)
-            const avg = sum / arr.length
+            let sum = NumArray.reduce((total, currentValue) => total+currentValue )
+
+            let avg = sum / NumArray.length 
+
             return avg
-
-            // for (let value of arr) {
-            //     let array = []
-            //     let values = parseInt(value)
-            //     let newArray = array.push(values)
-            //     console.log(values)
-
-            }
-        
-        //     const reducer = (previousValue, currentValue) => previousValue + currentValue;
-        //     const sum = arr.reduce(reducer)
-        //     console.log(sum)
         }
     }
 }
 </script>
 
 <style scoped>
-    * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-    font-family: 'Raleway', sans-serif;;
-}
+
 .container {
-    box-sizing: border-box;
-  max-width: 80%;
+  box-sizing: border-box;
+  max-width: 65%;
   margin: 30px auto;
   overflow: auto;
   height:500px;
   max-height: 80%;
-  border: 1px solid steelblue;
+  border: 1px solid white;
   padding: 40px;
-  border-radius: 5px;
+  
+}
+.profilepicture{
+    position: relative;
+    right:40px;
+    height:10%;
+    width:100px;
+    border-radius:50%;
+    border:1px solid rgb(228, 224, 224);
+    z-index:2;
+}
+.info-container{
+    position: relative;
+    bottom:100px;
+    z-index:1;
+}
+.info{
+    display:flex;
+    flex-direction: column;
+    border-bottom: .1px solid rgb(228, 224, 224);
+}
+
+*{
+    background-color: white;
 }
 
 </style>
