@@ -1,14 +1,18 @@
 <template>
     <div class="container">
-        <ul class="info" v-for="user in users.students">
+        <input type="text" v-model="search" placeholder="Search by Name"/> 
+        <ul class="info" v-for="user in filteredUsers" :key="user.firstName">
                  <img v-bind:src="user.pic" class='profilepicture'/>
                  <div class="info-container">
                 <h1>{{user.firstName.toUpperCase()}} {{user.lastName.toUpperCase()}} </h1>
                 <p>Company: {{user.company}}</p>
                 <p>Email: {{user.email}}</p>
                 <p>Skill: {{user.skill}}</p>
-                <!-- <p v-for="grade in user.grades">{{onAverage(grade)}}</p> -->
                 <p>Average: {{onAverage(user.grades)}}%</p>
+                <button v-on:click="!hidden">+</button> 
+                <ul><li v-for="(grade, index) in user.grades" :key="index" v-show="hidden === false" > Test {{index}}:{{grade}}</li>  </ul>
+                    
+                
                 </div>
             
         </ul>
@@ -18,20 +22,25 @@
 <script>
 const axios = require('axios').default;
 
+
 export default {
     
     name: 'Data',
     data() {
             return {
-                users: []
+                users: [],
+                search: "",
+                hidden : true,
+                grades : []
             }
         },
 
     mounted: function() {
+        
         axios.get('https://api.hatchways.io/assessment/students')
         .then(response =>  {
-            this.users = response.data
-            console.log(response.data);
+            this.users = response.data.students
+            console.log(this.users);
              })
         .catch(error => {
             console.log(error);
@@ -39,6 +48,8 @@ export default {
 
     },
     methods: {
+
+
         onAverage(arr){
             let NumArray = arr.map(element => parseInt(element))
 
@@ -48,6 +59,15 @@ export default {
 
             return avg
         }
+    },
+
+    computed: {
+        filteredUsers() {
+            return  this.users.filter(post => post.firstName.toLowerCase().match(this.search)|| post.lastName.toLowerCase().match(this.search))
+        }
+
+            
+        
     }
 }
 </script>
